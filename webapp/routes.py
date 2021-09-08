@@ -1,22 +1,27 @@
 from flask import Flask, render_template, url_for, redirect, flash
 from webapp import app, db, bcrypt
 from webapp.forms import RegistratationForm, LoginForm
-from webapp.models import User
 from flask_login import login_user, current_user, logout_user
+from flask import jsonify
+from .models.users import User
 
 # @app.route specifies the URL
 # render_template(<html file>)
 # - retrieves the html file from templates folder and use it for the web app,
 # - able to pass in parameters that can be used in the HTML files using code blocks {%%}, {{}}
 @app.route("/")
+
+# Home page 
 @app.route("/home")
 def home():
     return render_template('home.html', title="Home Page")
 
+# About page 
 @app.route("/about")
 def about():
     return render_template('about.html', title="About")
 
+# Login page 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     # Redirect authenticated user to home page
@@ -42,6 +47,7 @@ def login():
 
     return render_template('login.html', title="Login", form=form)
 
+# Register page 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
 
@@ -65,12 +71,18 @@ def register():
 
     return render_template('register.html', title="Register", form=form)
 
+# Reset password page 
 @app.route("/reset")
 def reset():
     return render_template('reset.html', title="Reset Password")
 
-# Logout function
+# Logout page
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("home"))
+
+# robots.txt page
+@app.route("/robots.txt")
+def robots():
+    return render_template('robots.txt', title="Robots")
