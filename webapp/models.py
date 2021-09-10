@@ -31,5 +31,5 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
 
 
-def __repr__(self):
-    return f"User('{self.username}','{self.email}')"
+    def __repr__(self):
+        return f"User('{self.username}','{self.email}')"

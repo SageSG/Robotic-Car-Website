@@ -33,6 +33,7 @@ class RegistratationForm(FlaskForm):
         if email is not None:
             raise ValidationError("Invalid email address.")
 
+# Login form
 class LoginForm(FlaskForm):
 
     email = StringField("Email", validators=[DataRequired(), Email()])
@@ -40,13 +41,13 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
-# Used to send request
+# Used to send password change request
 class ForgotForm(FlaskForm):
 
     email = StringField("Email", validators=[DataRequired(), Email()])
     submit = SubmitField("Reset Password")
 
-# Used to reset password
+# Used to reset user's password
 class ResetForm(FlaskForm):
     new_password = PasswordField("New Password", validators=[DataRequired()])
     confirm_new_passwd = PasswordField("Confirm New Password", validators=[DataRequired(), EqualTo('new_password')])
