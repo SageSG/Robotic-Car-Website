@@ -10,14 +10,14 @@
 
                 <!-- Validate email -->
                 {% if form.email.errors %}
-                    {{ form.email(class="form-control is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.email.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ form.email(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
-                    {{ form.email(class="form-control") }}
+                {{ form.email(class="form-control") }}
                 {% endif %}
             </div>
             <div class="mb-3">
@@ -25,14 +25,14 @@
 
                 <!-- Validate password -->
                 {% if form.password.errors %}
-                    {{ form.password(class="form-control is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.password.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ form.password(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
-                    {{ form.password(class="form-control") }}
+                {{ form.password(class="form-control") }}
                 {% endif %}
             </div>
         </fieldset>
@@ -46,7 +46,12 @@
     </form>
     <div class="border-top pt-3">
         <small class="text-muted">
-            New User? <a class="ml-2" href="{{ url_for('register') }}">Sign Up</a>
+            New user? <a class="ml-2" href="{{ url_for('register') }}">Sign Up</a>
+        </small>
+    </div>
+    <div class="pt-3">
+        <small class="text-muted">
+            Forget Password? <a class="ml-2" href="{{ url_for('forgot') }}">Reset Here</a>
         </small>
     </div>
 </div>

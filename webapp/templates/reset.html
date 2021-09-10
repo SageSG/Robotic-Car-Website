@@ -1,4 +1,44 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Reset Password</h1>
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }} <!-- For CSRF security purposes -->
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Registration Form</legend>
+            <div class="mb-3">
+                {{ form.new_password.label(class="form-label")}}
+
+                <!-- Validate password -->
+                {% if form.new_password.errors %}
+                    {{ form.new_password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.new_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.new_password(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                {{ form.confirm_new_passwd.label(class="form-label")}}
+
+                <!-- Validate confirm_password -->
+                {% if form.confirm_new_passwd.errors %}
+                    {{ form.confirm_new_passwd(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.confirm_new_passwd.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.confirm_new_passwd(class="form-control") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="col-12">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
 {% endblock %}
