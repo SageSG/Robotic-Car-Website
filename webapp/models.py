@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     # Generate a reset token for resetting of password
     def get_reset_key(self, expires_sec=1800):
         s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        # dumps(): serialize and sign the data
         return s.dumps({"user_id": self.id}).decode("utf-8")
 
     @staticmethod
@@ -25,7 +26,8 @@ class User(db.Model, UserMixin):
         s = Serializer(app.config["SECRET_KEY"])
         try:
             # Try to retrieve the user_id from the key
-            user_id = s.loads(key)['user_id']
+            # loads(): verify the signature and deserialize the data - dictionary
+            user_id = s.loads(key)['user_id'] # translates to dictionary[key] which retrieves value of key
         except:
             return None
         return User.query.get(user_id)

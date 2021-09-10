@@ -92,12 +92,12 @@ def send_gmail(user):
     user.reset_key = key
     db.session.commit()
 
-    CLIENT_SECRET_FILE = 'credentials.json'
-    API_NAME = 'gmail'
-    API_VERSION = 'v1'
-    SCOPES = ['https://mail.google.com/']
+    CLIENT_SECRET_FILE = 'credentials.json' # Contains the Client ID and Client Secret
+    API_NAME = 'gmail'  # Name of the API used
+    API_VERSION = 'v1'  # API version
+    SCOPES = ['https://mail.google.com/']   #endpoint that can be accessed by the webapp
 
-    service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+    service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES) # Create the API service
 
     emailMsg = f'''To reset your password click here: {url_for('reset', key=key, _external=True)}'''
     emailMsg += f'''\n\nIf you did not request this, please ignore this message.'''
@@ -107,6 +107,7 @@ def send_gmail(user):
     mimeMessage.attach(MIMEText(emailMsg, 'plain'))
     raw_string = base64.urlsafe_b64encode(mimeMessage.as_bytes()).decode()
 
+    # Send the email using the GMAIL API service
     message = service.users().messages().send(userId='me', body={'raw': raw_string}).execute()
 
 # Request to reset password page
