@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from .models.users import User
+from webapp.models import User
 
 # Create registration form for the webapp
 class RegistratationForm(FlaskForm):
@@ -49,6 +49,6 @@ class ForgotForm(FlaskForm):
 # Used to reset password
 class ResetForm(FlaskForm):
     new_password = PasswordField("New Password", validators=[DataRequired()])
-    confirm_new_passwd = PasswordField("Confirm New Password", validators=[DataRequired()])
+    confirm_new_passwd = PasswordField("Confirm New Password", validators=[DataRequired(), EqualTo('new_password')])
     submit = SubmitField("Change Password")
 

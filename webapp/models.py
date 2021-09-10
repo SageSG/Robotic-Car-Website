@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     username=db.Column(db.String(20),unique=True,nullable=False)
     email=db.Column(db.String(120),unique=True,nullable=False)
     password=db.Column(db.String(60),nullable=False)
+    reset_key = db.Column(db.String(60), nullable=True)
 
     # Generate a reset token for resetting of password
     def get_reset_key(self, expires_sec=1800):

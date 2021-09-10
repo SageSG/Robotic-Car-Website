@@ -10,6 +10,12 @@ from flask_login import login_user, current_user, logout_user
 from flask import jsonify
 from webapp.models import User
 
+# For sending email
+from webapp.google import Create_Service
+import base64
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 # @app.route specifies the URL
 # render_template(<html file>)
 # - retrieves the html file from templates folder and use it for the web app,
@@ -77,60 +83,108 @@ def register():
 
     return render_template('register.html', title="Register", form=form)
 
-# Reset password page
-@app.route("/reset")
-def reset():
-    return render_template('reset.html', title="Reset Password")
-# Function to send email using flask-mail
-def send_mail(user):
-    key = user.get_reset_key()
-    content = Message("Password Reset Request", sender="jacktan210718@gmail.com", recipients=[user.email])
-    content.body = f'''Reset password: {url_for('reset', key=key, _external=True)}'''
-    mail.send(content)
+# Function to send email using Gmail API
+def send_gmail(user):
 
+    key = user.get_reset_key()  #Generate a valid key for user with specified email
+
+    # Store the key into the database
+    user.reset_key = key
+    db.session.commit()
+
+    CLIENT_SECRET_FILE = 'credentials.json'
+    API_NAME = 'gmail'
+    API_VERSION = 'v1'
+    SCOPES = ['https://mail.google.com/']
+
+    service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+
+    emailMsg = f'''To reset your password click here: {url_for('reset', key=key, _external=True)}'''
+    emailMsg += f'''\n\nIf you did not request this, please ignore this message.'''
+    mimeMessage = MIMEMultipart()
+    mimeMessage['to'] = user.email
+    mimeMessage['subject'] = 'Password Reset'
+    mimeMessage.attach(MIMEText(emailMsg, 'plain'))
+    raw_string = base64.urlsafe_b64encode(mimeMessage.as_bytes()).decode()
+
+    message = service.users().messages().send(userId='me', body={'raw': raw_string}).execute()
+
+# Request to reset password page
 @app.route("/forgot", methods=["GET", "POST"])
 def forgot():
+
     form = ForgotForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        send_mail(user)
-        send_mail(user)
-        flash(f"Your password reset request has been sent to the specified email.", "success")
+        # Check if user exists
+        if user is not None:
+            send_gmail(user)
+        else:
+            pass
+
+        flash(f"If the email exists, the password reset request has been sent to the specified email.", "success")
 
     return render_template("forgot.html", title="Forgot Password", form=form)
 
+# Reset password page
 @app.route("/reset/<key>", methods=["GET", "POST"])
 def reset(key):
-    user_id = User.verify_reset_key(key)
-    if user_id is None:
-        flash("Invalid request link.", "warning")
-        return redirect(url_for("forgot"))
-    else:
+
+    user = User.verify_reset_key(key)
+
+    if user is not None and user.reset_key == key:
         form = ResetForm()
         if form.validate_on_submit():
             # Hash the password variable
-            hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+            hashed_password = bcrypt.generate_password_hash(form.confirm_new_passwd.data).decode("utf-8")
 
             # Store user details into database
-            user_id.password = hashed_password
+            user.password = hashed_password
+
+            # Generate a new key and store to DB to ensure that user cannot use the same link to reset again
+            user.reset_key = user.get_reset_key()
             db.session.commit()
-        return render_template('reset.html', title="Reset Password", form=form)
 
-# Authorised Pages
+            flash("Please login again.", "danger")
+            return redirect(url_for("login"))
+    else:
+        flash("Invalid request link.", "warning")
+        return redirect(url_for("forgot"))
 
-# Logout page
-@app.route("/logout")
-def logout():
-    logout_user()
-    return redirect(url_for("home"))
+
+    return render_template('reset.html', title="Reset Password", form=form)
 
 # robots.txt page
 @app.route("/robots.txt")
 def robots():
     return render_template('robots.txt', title="Robots")
 
+# Authorised Pages
+
+# Logout page
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
+
 # Account
-@app.route("/account")
+@app.route("/account", methods=["GET", "POST"])
 @login_required     #Only logged in users can access this page
 def account():
-    return render_template("account.html", title="Account")
+    form = ResetForm()
+    if form.validate_on_submit():
+        # Hash the password variable
+        hashed_password = bcrypt.generate_password_hash(form.confirm_new_passwd.data).decode("utf-8")
+
+        # Store user details into database
+        current_user.password = hashed_password
+
+        db.session.commit()
+
+        # Logout the user after password has been changed
+        logout_user()
+
+        return redirect(url_for("login"), )
+
+    return render_template("account.html", title="Account", form=form)
