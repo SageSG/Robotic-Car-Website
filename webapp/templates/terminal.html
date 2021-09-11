@@ -1,0 +1,127 @@
+{% extends "layout.html" %} {% block content %}
+<h1>CONTROL Terminal</h1>
+
+<div class="row mb-2">
+    <div class="col-md-12">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="height: 520px;">
+            <div class="col-md-8 p-1 d-flex flex-column position-static"><svg class="bd-placeholder-img" width="auto" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: MAP" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <title>Map</title>
+                    <rect width="100%" height="100%" fill="#EDEDED"/>
+                    <text x="50%" y="50%" fill="black" dy=".1em">Map</text>
+                </svg>
+            </div>
+            <div class="col-md-4 border-1 bg-light">
+                <div class="col-md-12 d-flex flex-column position-static ps-2 pt-2">
+                    <strong class="d-inline-block mb-2 text-primary">Queued</strong>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm ">
+                            <thead>
+                                <tr>
+                                    <th scope="col ">#</th>
+                                    <th scope="col ">Command</th>
+                                    <th scope="col ">Header</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Forward</td>
+                                    <td>data</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Left</td>
+                                    <td>irrelevant</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Right</td>
+                                    <td>rich</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Right</td>
+                                    <td>random</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Left</td>
+                                    <td>irrelevant</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Back</td>
+                                    <td>rich</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Left</td>
+                                    <td>placeholder</td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Right</td>
+                                    <td>placeholder</td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Left</td>
+                                    <td>irrelevant</td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>Left</td>
+                                    <td>illustrative</td>
+                                </tr>
+                                <tr>
+                                    <td>11</td>
+                                    <td>Back</td>
+                                    <td>tabular</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-sm-3" style="height: 400px;">
+        <div class="card h-100 position-relative d-flex flex-row">
+            <div class="card-body">
+                <strong class="d-inline-block text-dark">Click to add Command</strong>
+                <div class="mt-8 pt-2 position-relative d-flex flex-row justify-content-center align-items-center">
+                    <div class="remote btn-inner position-absolute">
+                    </div>
+                    <div class="remote btn-outer position-absolute"></div>
+                    <button type="button" class="btn btn-light fas fa-caret-right position-absolute right" onclick="addRight()">
+                        <i class="remote-icon "></i>
+                    </button>
+                    <button type="button" class="btn btn-light fas fa-caret-right position-absolute back" onclick="addBack()">
+                        <i class="remote-icon"></i>
+                    </button>
+                    <button type="button" class="btn btn-light fas fa-caret-right position-absolute left " onclick="addLeft()">
+                        <i class="remote-icon"></i>
+                    </button>
+                    <button type="button" class="btn btn-light fas fa-caret-right position-absolute forward" onclick="addForward()">
+                        <i class="remote-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-9 ">
+        <div class="p-2 p-md-4 mb-4 text-white rounded bg-secondary h-100">
+            <div class="col-md-12 ">
+                <strong class="d-inline-block mb-2 text-white">Command List</strong>
+                <div class="btn-group me-2 float-end" role="group">
+                    <button type="button" onclick="removeItem()" class="btn btn-danger ">Remove item</button>
+                    <button type="button" class="btn btn-success ">Execute</button>
+                </div>
+                <ul id="sqnce-list"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

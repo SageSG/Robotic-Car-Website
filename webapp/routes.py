@@ -1,8 +1,8 @@
 from flask import Flask, render_template, url_for, redirect, flash, request
-from webapp import app, db, bcrypt, mail
+from webapp import app, db, bcrypt
 from webapp.forms import RegistratationForm, LoginForm, ForgotForm, ResetForm
 from flask_login import login_user, current_user, logout_user, login_required
-from flask_mail import Message
+# from flask_mail import Message
 from flask import Flask, render_template, url_for, redirect, flash
 from webapp import app, db, bcrypt
 from webapp.forms import RegistratationForm, LoginForm
@@ -31,6 +31,10 @@ def home():
 @app.route("/about")
 def about():
     return render_template('about.html', title="About")
+
+@app.route("/terminal")
+def control():
+    return render_template('terminal.html', title="Terminal")
 
 # Login page
 @app.route("/login", methods=["GET", "POST"])
