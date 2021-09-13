@@ -8,7 +8,7 @@ from webapp import app, db, bcrypt
 from webapp.forms import RegistratationForm, LoginForm
 from flask_login import login_user, current_user, logout_user
 from flask import jsonify
-from webapp.models import User
+from .models.users import User
 
 # For sending email
 from webapp.google import Create_Service
