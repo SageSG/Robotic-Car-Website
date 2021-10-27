@@ -19,6 +19,7 @@ class CarStatsControllerAPI(Resource):
             args['distance'], args['speed'], args['line_detected'])
         return "success", 201
 
+
     def get(self):
         stats = get_stats() 
         return stats

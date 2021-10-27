@@ -117,11 +117,32 @@
                 <strong class="d-inline-block mb-2 text-white">Command List</strong>
                 <div class="btn-group me-2 float-end" role="group">
                     <button type="button" onclick="removeItem()" class="btn btn-danger ">Remove item</button>
-                    <button type="button" class="btn btn-success ">Execute</button>
+                    <button type="button" class="btn btn-success " id="execute_btn">Execute</button>
                 </div>
                 <ul id="sqnce-list"></ul>
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+    document.getElementById("execute_btn").onclick = function(){
+        const ul = document.getElementById('sqnce-list');
+        const listItems = ul.getElementsByTagName('li');
+        
+        // Loop through the NodeList object.
+        for (let i = 0; i <= listItems.length - 1; i++) {
+            var http = new XMLHttpRequest();
+            var url = 'http://127.0.0.1:5000/car/commands';
+            var params = 'direction=webportal&command=' + listItems[i].innerHTML;
+            http.open('POST', url, true);
+
+            //Send the proper header information along with the request
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    
+            http.send(params);
+        }
+    }
+</script>
 {% endblock %}

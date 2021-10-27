@@ -35,3 +35,8 @@ def get_stats():
     'battery_level': stats.battery_level, 'distance': stats.distance, 
     'speed': stats.speed, 'line_detected': stats.line_detected}
     return stats_json
+
+
+def reset():
+    # Remove all entires in the DB
+    pass 
