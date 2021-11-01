@@ -20,9 +20,13 @@ class CarStatsControllerAPI(Resource):
         return "success", 201
 
 
-    def get(self):
+    def display_dashboard_stats(self):
         stats = get_stats() 
         return stats
 
-# curl http://localhost:5000/car/stats -d "mac_addr=12345" -d "temperature=27.5" -d "battery_level=50" -d "distance=10" -d "speed=5" -d "line_detected=false" -X POST
+
+    def delete(self):
+        pass 
+
+# curl http://localhost:5000/car/stats -d "mac_addr=12345" -d "temperature=27.5" -d "battery_level=50" -d "distance=10" -d "speed=5" -d "line_detected=0" -X POST
 # 

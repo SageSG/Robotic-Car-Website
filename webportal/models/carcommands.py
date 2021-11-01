@@ -11,18 +11,19 @@ class CarCommands(db.Model):
 
 
 def insert_commands(command):
-    # Inserts the commands to the db 
-    command = CarCommands("car", command)
-    db.session.add(command)
-    db.session.commit()
+	# Inserts the commands to the db 
+	command = CarCommands("car", command)
+	db.session.add(command)
+	db.session.commit()
 
 
-def get_commands():
+def send_commands():
 	# Get the commands from the db and send it to the car (ask HL or Jas)
 	pass 
 
 
 def reset():
 	# Delete all entires in the database 
-	pass 
+	num_rows_deleted = db.session.query(CarCommands).delete()
+	db.session.commit() 
 	

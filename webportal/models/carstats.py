@@ -29,14 +29,25 @@ def insert_stats(mac_addr, temperature, battery_level, distance, speed, line_det
 
 def get_stats():
     # Retrieve the latest stats from the DB
-    largest_id = db.session.query(CarStats).order_by('id').all()[-1].id
-    stats = CarStats.query.filter_by(id=largest_id).first()
-    stats_json = {'mac_addr': stats.mac_addr, 'temperature': stats.temperature, 
-    'battery_level': stats.battery_level, 'distance': stats.distance, 
-    'speed': stats.speed, 'line_detected': stats.line_detected}
+    data = db.session.query(CarStats).order_by('id').all()
+    
+    
+
+    
+
+    # largest_id = db.session.query(CarStats).order_by('id').all()[-1].id
+    # stats = CarStats.query.filter_by(id=largest_id).first()
+    # stats_json = {'mac_addr': stats.mac_addr, 'temperature': stats.temperature, 
+    # 'battery_level': stats.battery_level, 'distance': stats.distance, 
+    # 'speed': stats.speed, 'line_detected': stats.line_detected}
+
+    stats_json = {'mac_addr': 123, 'temperature': 123, 
+    'battery_level': 123, 'distance': 123, 
+    'speed': 123, 'line_detected': 123}
     return stats_json
 
 
 def reset():
     # Remove all entires in the DB
-    pass 
+    num_rows_deleted = db.session.query(CarStats).delete()
+    db.session.commit()

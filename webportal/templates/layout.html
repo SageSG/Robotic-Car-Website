@@ -12,6 +12,7 @@
 
     <!-- Fonts/Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <!-- JavaScript for Control.html -->
     <script defer src="{{ url_for('static', filename='terminal.js')}}"></script>
@@ -42,7 +43,7 @@
                             <a class="nav-link" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/about">About</a>
+                            <a class="nav-link" href="/maps">Maps</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/dashboard">Dashboard</a>
@@ -52,16 +53,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/tutorials">Tutorials</a>
-                        </li>
-                    </ul>
-                    <!-- Navbar right side -->
-                    <ul class="navbar-nav">
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/register">Register</a>
                         </li>
                     </ul>
                 </div>
@@ -87,5 +78,10 @@
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 </body>
-
+<footer>
+    <div class="text-center p-4 bg-steel">
+        © 2021 Copyright:
+        <a class="text-reset fw-bold" href="">Bumbling Cat Pandas</a>
+    </div>
+</footer>
 </html>

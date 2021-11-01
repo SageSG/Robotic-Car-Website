@@ -9,20 +9,25 @@ def home():
     return render_template('home.html', title="Home Page")
 
 
-@views.route("/about")
-def about():
-    return render_template('about.html', title="About")
-
-
-@views.route("/terminal")
-def control():
-    return render_template('terminal.html', title="Terminal")
+@views.route("/maps")
+def maps():
+    return render_template('maps.html', title="Maps")
 
 
 @views.route("/dashboard")
 def dashboard():
     data = get_stats()
     return render_template('dashboard.html', title="Dashboard", data=data)
+
+
+@views.route("/terminal")
+def terminal():
+    return render_template('terminal.html', title="Terminal")
+
+
+@views.route("/tutorials")
+def tutorials():
+    return render_template('tutorials.html', title="Tutorials")
 
 
 @views.route("/robots.txt")

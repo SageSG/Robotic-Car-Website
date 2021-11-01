@@ -1,35 +1,25 @@
 {% extends "layout.html" %} {% block content %}
 <h1>Dashboard</h1>
 <div class="row mb-12">
-	<div class="col-md-3 p-1 d-flex flex-column position-static">
+	<div class="col-md-4 p-1 d-flex flex-column position-static">
 		<h2 style="text-align:center;">Car Connection</h2>
-		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="height: 100px;">
-			<p>JGraphs will be used here</p>
+		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative d-flex align-items-center justify-content-center" style="height: 100px; background-color:#73C6B6">
+			<h2 style="text-align:center;"><i class="bi bi-reception-4"></i> Connected</h2>
 		</div>
 	</div>
 
 
-	<div class="col-md-3 p-1 d-flex flex-column position-static">
+	<div class="col-md-4 p-1 d-flex flex-column position-static">
 		<h2 style="text-align:center;">Current Speed</h2>
-		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="height: 100px;">
-			<p>{{data.speed}}</p>
-			<p>JGraphs will be used here</p>
+		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative d-flex align-items-center justify-content-center" style="height: 100px; background-color:#A3E4D7">
+			<h2 style="text-align:center;"><i class="bi bi-speedometer"></i> {{data.speed}}km/h</h2>
 		</div>
 	</div>
 
-	<div class="col-md-3 p-1 d-flex flex-column position-static">
+	<div class="col-md-4 p-1 d-flex flex-column position-static">
 		<h2 style="text-align:center;">Current Temps</h2>
-		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="height: 100px;">
-			<p>{{data.temperature}}</p>
-			<p>JGraphs will be used here</p>
-		</div>
-	</div>
-
-	<div class="col-md-3 p-1 d-flex flex-column position-static">
-		<h2 style="text-align:center;">Battery level</h2>
-		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="height: 100px;">
-			<p>{{data.battery_level}}</p>
-			<p>JGraphs will be used here</p>
+		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative d-flex align-items-center justify-content-center" style="height: 100px; background-color:#85C1E9">
+				<h2 style="text-align:center"><i class="bi bi-thermometer-half"></i> {{data.temperature}}°C</h2>
 		</div>
 	</div>
 </div>
@@ -39,17 +29,209 @@
 	<div class="col-md-6 p-1 d-flex flex-column position-static">
 		<h2 style="text-align:center;">Temperature Graph</h2>
 		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="height: 350px;">
-			<p>JGraphs will be used here</p>
+			<canvas id="temp_chart" width="400" height="210"></canvas>
 		</div>
 	</div>
 
 	<div class="col-md-6 p-1 d-flex flex-column position-static">
 		<h2 style="text-align:center;">Rate of Line Detection</h2>
 		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="height: 350px;">
-			<p>JGraphs will be used here</p>
+			<canvas id="line_detect_chart" width="400" height="210"></canvas>
 		</div>
 	</div>
 </div>
+
+<div class="row mb-12">
+	<div class="col-md-6 p-1 d-flex flex-column position-static">
+		<h2 style="text-align:center;">Line Detection Count</h2>
+		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="height: 350px;">
+			<canvas id="line_detec_count_chart" width="400" height="210"></canvas>
+		</div>
+	</div>
+
+	<div class="col-md-6 p-1 d-flex flex-column position-static">
+		<h2 style="text-align:center;">Movement Commands Radar</h2>
+		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="height: 650px;">
+			<canvas id="command_radar_chart" width="0" height="0"></canvas>
+		</div>
+	</div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.esm.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.esm.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/helpers.esm.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/helpers.esm.min.js"></script>
+<script>
+const ctx = document.getElementById('temp_chart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+
+<script>
+const ctx1 = document.getElementById('line_detect_chart').getContext('2d');
+const myChart1 = new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: ['Detected', 'Move 1', 'Move 2', 'Move 3', 'Move 4', 'Move 5'],
+        datasets: [{
+            label: 'Line Detected',
+            data: [0, 1, 1, 0, 1, 1],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+		        ticks: {
+		            precision: 0,
+			        callback:function(value,index,values){
+			            if (value == 1) return "True";
+			            if (value == 0) return "False";
+			        }		            
+		        }        
+            }
+        }
+    }
+});
+</script>
+
+<script>
+const ctx2 = document.getElementById('line_detec_count_chart').getContext('2d');
+const myChart2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: ['Detected', 'Move 1', 'Move 2', 'Move 3', 'Move 4', 'Move 5'],
+        datasets: [{
+            label: 'Line Detected',
+            data: [0, 1, 1, 0, 1, 1],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+		        ticks: {
+		            precision: 0,
+			        callback:function(value,index,values){
+			            if (value == 1) return "True";
+			            if (value == 0) return "False";
+			        }		            
+		        }        
+            }
+        }
+    }
+});
+</script>
+
+<script>
+const ctx3 = document.getElementById('command_radar_chart').getContext('2d');
+const myChart3 = new Chart(ctx3, {
+    type: 'radar',
+    data: {
+        labels: ['forward', 'left', 'right', 'backwards'],
+        datasets: [{
+            label: 'Line Detected',
+            data: [20, 1, 1, 0],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+		        ticks: {
+		            precision: 0,	            
+		        }        
+            }
+        }
+    }
+});
+</script>
 
 <script>
     setInterval(function(){$.ajax({
