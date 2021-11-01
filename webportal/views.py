@@ -1,6 +1,8 @@
 from flask import Blueprint
 from flask import Flask, render_template
-from webportal.models.carstats import get_stats
+from webportal.models.carstats import get_car_stats
+from webportal.models.carcommands import get_command_stats
+
 
 views = Blueprint('views', __name__)
 
@@ -16,8 +18,9 @@ def maps():
 
 @views.route("/dashboard")
 def dashboard():
-    data = get_stats()
-    return render_template('dashboard.html', title="Dashboard", data=data)
+    car_data = get_car_stats()
+    command_data = get_command_stats()
+    return render_template('dashboard.html', title="Dashboard", car_data=car_data)
 
 
 @views.route("/terminal")

@@ -22,6 +22,12 @@ def send_commands():
 	pass 
 
 
+def get_command_stats():
+	data = db.session.query(CarCommands).order_by('id').all() 
+	command_dict = {"foward": 0, "left": 0, "right": 0, "backwards": 0}
+	print(data)
+
+
 def reset():
 	# Delete all entires in the database 
 	num_rows_deleted = db.session.query(CarCommands).delete()

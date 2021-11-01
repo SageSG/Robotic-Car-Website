@@ -27,24 +27,47 @@ def insert_stats(mac_addr, temperature, battery_level, distance, speed, line_det
     db.session.commit()
 
 
-def get_stats():
+def get_car_stats():
     # Retrieve the latest stats from the DB
     data = db.session.query(CarStats).order_by('id').all()
-    
-    
 
-    
+    # Latest entry data 
+    latest_entry = data[-1]
+    current_speed = latest_entry.speed
+    current_temps = latest_entry.temperature
+    current_stats = {'current_speed': current_speed, 'current_temps': current_temps}
 
-    # largest_id = db.session.query(CarStats).order_by('id').all()[-1].id
-    # stats = CarStats.query.filter_by(id=largest_id).first()
-    # stats_json = {'mac_addr': stats.mac_addr, 'temperature': stats.temperature, 
-    # 'battery_level': stats.battery_level, 'distance': stats.distance, 
-    # 'speed': stats.speed, 'line_detected': stats.line_detected}
+    # For tempature graph 
+    temps_graph_stats = {}
+    counter = 1 
+    movement_placeholder = f"Movement {counter}"
+    for item in data:
+        movement_placeholder = f"Movement {counter}"
+        temps_graph_stats[movement_placeholder] = item.temperature
+        counter += 1
 
-    stats_json = {'mac_addr': 123, 'temperature': 123, 
-    'battery_level': 123, 'distance': 123, 
-    'speed': 123, 'line_detected': 123}
-    return stats_json
+    # For rate of line detection graph 
+    line_detect_graph_stats = {}
+    counter = 1
+    movement_placeholder = f"Movement {counter}"
+    for item in data:
+        movement_placeholder = f"Movement {counter}"
+        line_detect_graph_stats[movement_placeholder] = item.line_detected    
+        counter += 1
+
+    # Line detection count graph 
+    line_count_graph_stats = {}
+    true_count = 0
+    false_count = 0 
+    for item in data:   
+        if item.line_detected == 1:
+            true_count += 1 
+        else:
+            false_count += 1 
+    line_count_graph_stats["true_count"] = true_count
+    line_count_graph_stats["false_count"] = false_count  
+
+    return current_stats, temps_graph_stats, line_detect_graph_stats, line_count_graph_stats
 
 
 def reset():
