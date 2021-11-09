@@ -10,7 +10,7 @@ function removeNode(node) {
         node.parentNode.removeChild(node);
       }
       
-    function drop(ev) {
+function drop(ev) {
       ev.preventDefault();
       var data = ev.dataTransfer.getData("text");
       var isLeft = 'drag3' == data || "drag4" == data;
@@ -33,6 +33,19 @@ function removeNode(node) {
       }
       ev.stopPropagation();
       return false;
-    }function allowDrop(ev) {
+    }
+
+function allowDrop(ev) {
   ev.preventDefault();
+}
+
+
+function savemap() { 
+  
+
+
+
+
+
+
 }
