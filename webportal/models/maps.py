@@ -1,0 +1,1 @@
+# Map id, Can_move, got obstacle 

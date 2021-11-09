@@ -16,8 +16,15 @@
 
     <!-- JavaScript for Control.html -->
     <script defer src="{{ url_for('static', filename='terminal.js')}}"></script>
+
     <!-- Main CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}"> {% if title %}
+
+    <!-- JavaScript for map.html -->
+    <link rel="styleshhet" hrefe="https://use.fontawesome.com/releases/v.5.9.0/css/all.css">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="{{ url_for('static', filename='map.js')}}"></script>
+
     <title>{{ title }}</title>
     {% else %}
     <title> ICT2X01 </title>
