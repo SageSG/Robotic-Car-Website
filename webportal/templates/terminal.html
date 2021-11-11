@@ -1,13 +1,12 @@
 {% extends "layout.html" %} {% block content %}
-<h1>CONTROL Terminal</h1>
 
-<!-- <xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none"></xml> -->
-<!-- <script src="https://unpkg.com/blockly/blockly.min.js"></script> -->
+<xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none"></xml>
+<script src="https://unpkg.com/blockly/blockly.min.js"></script>
 
-<script src="../static/scripts/blockly_compressed.js"></script>
+<!-- <script src="../static/scripts/blockly_compressed.js"></script>
 <script src="../static/scripts/blocks_compressed.js"></script>
 <script src="../static/scripts/javascript_compressed.js"></script>
-<script src="../static/scripts/en.js"></script>
+<script src="../static/scripts/en.js"></script> -->
 <script src="../static/scripts/block.js"></script>
 
 <!-- <script src="../static/scripts/music_maker.js"></script>
@@ -15,11 +14,72 @@
 <!-- <script src="scripts/workspace.js"></script>
 <script src="scripts/main.js"></script> -->
 
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h1">CONTROL Terminal</h1>
+    <a class="btn btn-primary btn-lg" data-bs-toggle="collapse" href="#collapseExample" role="button"
+        aria-expanded="false" aria-controls="collapseExample">
+        Levels / Maps
+    </a>
+    <!-- <div class="btn-group">
+    </div> -->
+</div>
+
+<div class="collapse mb-3" id="collapseExample">
+    <div class="card card-body">
+        <ul class="list-group list-group-horizontal border-0">
+            <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level1" value=""
+                checked>
+            <label class="list-group-item py-3" for="level1">
+                1. Moving Forward
+                <span class="d-block small opacity-50">Level 1</span>
+            </label>
+
+            <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level2" value="">
+            <label class="list-group-item py-3" for="level2">
+                2. Turning
+                <span class="d-block small opacity-50">Level 2</span>
+            </label>
+
+            <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level3" value="">
+            <label class="list-group-item py-3" for="level3">
+                3. For-Loop
+                <span class="d-block small opacity-50">Level 3</span>
+            </label>
+
+            <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level4" value="">
+            <label class="list-group-item py-3" for="level4">
+                4. If-Else Loop
+                <span class="d-block small opacity-50">This option is disabled</span>
+            </label>
+            <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level5" value="">
+            <label class="list-group-item py-3" for="level5">
+                5. Hello
+                <span class="d-block small opacity-50">Something level here.</span>
+            </label>
+            <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level6" value="">
+            <label class="list-group-item py-3" for="level6">
+                6. Hello on the other side.
+                <span class="d-block small opacity-50">Something level here.</span>
+            </label>
+            <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level7" value="">
+            <label class="list-group-item py-3" for="level7">
+                7. Insert text here.
+                <span class="d-block small opacity-50">Something Something.</span>
+            </label>
+            <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level8" value="">
+            <label class="list-group-item py-3" for="level8">
+                8. HellooOO.
+                <span class="d-block small opacity-50">hELLO.</span>
+            </label>
+        </ul>
+    </div>
+</div>
+
 <div class="row mb-2">
     <div class="col-md-12">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
             style="height: 520px;">
-            <div class="col-md-5 p-1 d-flex flex-column position-static"><svg class="bd-placeholder-img" width="auto"
+            <div class="col-md-6 p-1 d-flex flex-column position-static"><svg class="bd-placeholder-img" width="auto"
                     height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: MAP"
                     preserveAspectRatio="xMidYMid slice" focusable="false">
                     <title>Map</title>
@@ -27,7 +87,7 @@
                     <text x="50%" y="50%" fill="black" dy=".1em">Map</text>
                 </svg>
             </div>
-            <div class="col-md-5 border-1 bg-light p-1">
+            <div class="col-md-6 border-1 bg-light p-1">
                 <div class="col-md-12 d-flex flex-column position-static ps-2 pt-2">
                     <strong class="d-inline-block mb-2 text-primary">Queued</strong>
                     <div class="table-responsive">
@@ -100,31 +160,32 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 border-1 bg-light list-group list-group-checkable">
-                <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level1" value="" checked>
+            <!-- <div class="col-md-2 border-1 bg-light list-group list-group-checkable">
+                <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level1" value=""
+                    checked>
                 <label class="list-group-item py-3" for="level1">
-                  1. Moving Forward
-                  <span class="d-block small opacity-50">Level 1</span>
+                    1. Moving Forward
+                    <span class="d-block small opacity-50">Level 1</span>
                 </label>
-              
+
                 <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level2" value="">
                 <label class="list-group-item py-3" for="level2">
-                  2. Turning
-                  <span class="d-block small opacity-50">Level 2</span>
+                    2. Turning
+                    <span class="d-block small opacity-50">Level 2</span>
                 </label>
-              
+
                 <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level3" value="">
                 <label class="list-group-item py-3" for="level3">
-                  3. For-Loop
-                  <span class="d-block small opacity-50">Level 3</span>
+                    3. For-Loop
+                    <span class="d-block small opacity-50">Level 3</span>
                 </label>
-              
+
                 <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level4" value="">
                 <label class="list-group-item py-3" for="level4">
-                  4. If-Else Loop
-                  <span class="d-block small opacity-50">This option is disabled</span>
+                    4. If-Else Loop
+                    <span class="d-block small opacity-50">This option is disabled</span>
                 </label>
-              </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -132,14 +193,7 @@
     <div class="col-sm-8" style="height: 600px;">
         <div class="card h-100 position-relative d-flex flex-row">
             <div class="card-body">
-                <strong class="d-inline-block text-dark mb-2">Click to add Command</strong>
-                <div class="pb-3">
-                    <button class="mode-maker mdl-button" id="edit">Edit</button>
-                    <button class="mode-edit mdl-button mdl-js-button" id="done">Done</button>
-                    <button class="mode-blockly mdl-button mdl-js-button" id="save">Save</button>
-                    <button onclick="runCode()">RUN</button>
-                </div>
-
+                <strong class="d-inline-block text-dark mb-2">Drag and drop to configure Commands.</strong>
                 <div class="blockly-editor ">
                     <div id="blocklyDiv" style="height: 480px; width: 800px;"></div>
                     <xml id="toolbox" style="display: none">
@@ -152,7 +206,7 @@
                         <block type="math_number">
                             <field name="NUM">123</field>
                         </block>
-                        <!-- <block type="text_print"></block> -->
+                        <block type="text_print"></block>
                     </xml>
                 </div>
             </div>
@@ -161,10 +215,11 @@
     <div class="col-sm-4 ">
         <div class="p-2 p-md-4 mb-4 text-white rounded bg-secondary h-100">
             <div class="col-md-12 ">
-                <strong class="d-inline-block mb-2 text-white">Command List</strong>
+                <strong id="textArea" class="d-inline-block mb-2 text-white">Command List</strong>
                 <div class="btn-group me-2 float-end" role="group">
                     <button type="button" onclick="removeItem()" class="btn btn-danger ">Remove item</button>
-                    <button type="button" class="btn btn-success " id="execute_btn">Execute</button>
+                    <button type="button" class="btn btn-success " id="execute_btn"
+                        onclick="removeItem()">Execute</button>
                 </div>
                 <ul id="sqnce-list"></ul>
             </div>
@@ -175,17 +230,21 @@
 
 <script>
     var workspace = Blockly.inject('blocklyDiv',
-        { toolbox: document.getElementById('toolbox') });
+        {
+            toolbox: document.getElementById('toolbox'
+            ), trashcan: true
+        });
 
-    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
-        demoWorkspace);
+    // Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
+    //     demoWorkspace);
 
-    // function showCode() {
-    //     // Generate JavaScript code and display it.
-    //     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-    //     var code = Blockly.JavaScript.workspaceToCode(workspace);
-    //     alert(code);
-    // }
+    var code = Blockly.JavaScript.workspaceToCode(workspace);
+
+    function showCode(event) {
+        var code = Blockly.JavaScript.workspaceToCode(workspace);
+        document.getElementById('textArea').value = code;
+    }
+    workspace.addChangeListener(showCode);
 
     // function runCode() {
     //     // Generate JavaScript code and run it.
