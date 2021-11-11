@@ -16,15 +16,13 @@
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h1">CONTROL Terminal</h1>
-    <a class="btn btn-primary btn-lg" data-bs-toggle="collapse" href="#collapseExample" role="button"
-        aria-expanded="false" aria-controls="collapseExample">
+    <a class="btn btn-primary btn-lg" data-bs-toggle="collapse" href="#collapseLevels" role="button"
+        aria-expanded="false" aria-controls="collapseLevels">
         Levels / Maps
     </a>
-    <!-- <div class="btn-group">
-    </div> -->
 </div>
 
-<div class="collapse mb-3" id="collapseExample">
+<div class="collapse mb-3" id="collapseLevels">
     <div class="card card-body">
         <ul class="list-group list-group-horizontal border-0">
             <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level1" value=""
@@ -79,7 +77,7 @@
     <div class="col-md-12">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
             style="height: 520px;">
-            <div class="col-md-6 p-1 d-flex flex-column position-static"><svg class="bd-placeholder-img" width="auto"
+            <div class="col-md-8 p-1 d-flex flex-column position-static"><svg class="bd-placeholder-img" width="auto"
                     height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: MAP"
                     preserveAspectRatio="xMidYMid slice" focusable="false">
                     <title>Map</title>
@@ -87,7 +85,7 @@
                     <text x="50%" y="50%" fill="black" dy=".1em">Map</text>
                 </svg>
             </div>
-            <div class="col-md-6 border-1 bg-light p-1">
+            <div class="col-md-4 border-1 bg-light p-1">
                 <div class="col-md-12 d-flex flex-column position-static ps-2 pt-2">
                     <strong class="d-inline-block mb-2 text-primary">Queued</strong>
                     <div class="table-responsive">
@@ -160,32 +158,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-2 border-1 bg-light list-group list-group-checkable">
-                <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level1" value=""
-                    checked>
-                <label class="list-group-item py-3" for="level1">
-                    1. Moving Forward
-                    <span class="d-block small opacity-50">Level 1</span>
-                </label>
-
-                <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level2" value="">
-                <label class="list-group-item py-3" for="level2">
-                    2. Turning
-                    <span class="d-block small opacity-50">Level 2</span>
-                </label>
-
-                <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level3" value="">
-                <label class="list-group-item py-3" for="level3">
-                    3. For-Loop
-                    <span class="d-block small opacity-50">Level 3</span>
-                </label>
-
-                <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="level4" value="">
-                <label class="list-group-item py-3" for="level4">
-                    4. If-Else Loop
-                    <span class="d-block small opacity-50">This option is disabled</span>
-                </label>
-            </div> -->
         </div>
     </div>
 </div>
@@ -193,9 +165,15 @@
     <div class="col-sm-8" style="height: 600px;">
         <div class="card h-100 position-relative d-flex flex-row">
             <div class="card-body">
-                <strong class="d-inline-block text-dark mb-2">Drag and drop to configure Commands.</strong>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-3">
+                    <strong class="d-inline-block text-dark mb-2">Drag and drop to configure Commands.</strong>
+                    <div class="btn-group me-1 float-end" role="group">
+                        <button type="button" onclick="clearCode()" class="btn btn-danger ">Clear Commands</button>
+                        <button type="button" class="btn btn-success " onclick="showCode()">Send Commands</button>
+                    </div>
+                </div>
                 <div class="blockly-editor ">
-                    <div id="blocklyDiv" style="height: 480px; width: 800px;"></div>
+                    <div id="blocklyDiv" style="height: 500px; width: 820px;"></div>
                     <xml id="toolbox" style="display: none">
                         <block type="forward"></block>
                         <block type="turn"></block>
@@ -208,6 +186,8 @@
                         </block>
                         <block type="text_print"></block>
                     </xml>
+                    <xml id="startBlocks" style="display: none">
+                    </xml>
                 </div>
             </div>
         </div>
@@ -215,19 +195,16 @@
     <div class="col-sm-4 ">
         <div class="p-2 p-md-4 mb-4 text-white rounded bg-secondary h-100">
             <div class="col-md-12 ">
-                <strong id="textArea" class="d-inline-block mb-2 text-white">Command List</strong>
-                <div class="btn-group me-2 float-end" role="group">
-                    <button type="button" onclick="removeItem()" class="btn btn-danger ">Remove item</button>
-                    <button type="button" class="btn btn-success " id="execute_btn"
-                        onclick="removeItem()">Execute</button>
+                <div class=" border-bottom mb-4">
+                    <strong class="d-inline-block mb-2 text-white">Command List</strong>
                 </div>
-                <ul id="sqnce-list"></ul>
+                <!-- <ul id="sqnce-list"></ul> -->
+                <p class="mt-2" id="textArea">
+                </p>
             </div>
         </div>
     </div>
 </div>
-
-
 <script>
     var workspace = Blockly.inject('blocklyDiv',
         {
@@ -235,16 +212,20 @@
             ), trashcan: true
         });
 
-    // Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
-    //     demoWorkspace);
+    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+    function showCode() {
+        // Generate code and display it.
+        Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+        Blockly.JavaScript.addReservedWords('code');
 
-    var code = Blockly.JavaScript.workspaceToCode(workspace);
-
-    function showCode(event) {
         var code = Blockly.JavaScript.workspaceToCode(workspace);
-        document.getElementById('textArea').value = code;
+        // alert(code);
+        document.getElementById('textArea').innerText = code;
     }
-    workspace.addChangeListener(showCode);
+
+    function clearCode() {
+        document.getElementById('textArea').innerText = "";
+    }
 
     // function runCode() {
     //     // Generate JavaScript code and run it.

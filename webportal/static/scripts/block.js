@@ -13,17 +13,17 @@
 //     "helpUrl": ""
 // }]);
 
-Blockly.Blocks['testblock'] = {
-    init: function () {
-        this.appendDummyInput()
-            .appendField("Helloooo");
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setColour(230);
-        this.setTooltip("");
-        this.setHelpUrl("");
-    }
-};
+// Blockly.Blocks['testblock'] = {
+//     init: function () {
+//         this.appendDummyInput()
+//             .appendField("Helloooo");
+//         this.setPreviousStatement(true, null);
+//         this.setNextStatement(true, null);
+//         this.setColour(230);
+//         this.setTooltip("");
+//         this.setHelpUrl("");
+//     }
+// };
 
 Blockly.Blocks['forward'] = {
     init: function () {
@@ -77,26 +77,26 @@ Blockly.Blocks['print'] = {
 
 Blockly.JavaScript['forward'] = function (block) {
     // TODO: Assemble JavaScript into code variable.
-    var code = '...;\n';
+    var code = 'Motor_Start();\n';
     return code;
 };
 
 Blockly.JavaScript['turn'] = function (block) {
     var dropdown_name = block.getFieldValue('NAME');
     // TODO: Assemble JavaScript into code variable.
-    var code = '...;\n';
+    var code = 'Motor_Turn();\n';
     return code;
 };
 
 Blockly.JavaScript['repeatuntilend'] = function (block) {
     var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
     // TODO: Assemble JavaScript into code variable.
-    var code = '...;\n';
+    var code = 'for(){\n};\n';
     return code;
 };
 
 Blockly.JavaScript['print'] = function(block) {
     // TODO: Assemble JavaScript into code variable.
-    var code = '...;\n';
+    var code = 'uprintf();\n';
     return code;
   };
